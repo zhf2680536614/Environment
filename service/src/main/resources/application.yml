@@ -1,0 +1,51 @@
+server:
+  port: 18080
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-circular-references: true
+  datasource:
+    driver-class-name: ${atey.datasource.driver-class-name}
+    url: jdbc:mysql://${atey.datasource.host}:${atey.datasource.port}/${atey.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${atey.datasource.username}
+    password: ${atey.datasource.password}
+  application:
+    name: Environment
+
+mybatis-plus:
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      update-strategy: not_null
+      id-type: assign_id
+      logic-delete-field: is_delete
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+    banner: true
+
+logging:
+  level:
+    com:
+      atey:
+        mapper: debug
+        service: info
+        controller: info
+atey:
+  jwt:
+    user-secret-key: ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0OPB0USER
+    user-token-name: Authentication
+    user-ttl: 7200000
+
+    manage-secret-key: ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0OPB0MANAGE
+    manage-token-name: Token
+    manage-ttl: 7200000
+
+  minio:
+    access-key: minio
+    secret-key: minio123
+    bucket: article
+    end-point: http://192.168.111.129:9000
+    read-path: /article
