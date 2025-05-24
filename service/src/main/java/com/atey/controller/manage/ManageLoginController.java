@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/manage")
-@Api(tags = "管理员登录相关接口")
+@Api(tags = "管理员相关接口/管理员登录接口")
 @Slf4j
 @RequiredArgsConstructor
 public class ManageLoginController {

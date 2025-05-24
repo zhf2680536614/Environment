@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serial;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,7 +26,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("article")
-@ApiModel(value="Article对象", description="文章表")
+@ApiModel(value = "Article对象", description = "文章表")
 public class Article implements Serializable {
 
     @Serial
@@ -41,8 +42,14 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "作者ID")
     private Long authorId;
 
+    @ApiModelProperty(value = "作者昵称")
+    private String authorName;
+
     @ApiModelProperty(value = "分类ID")
     private Long categoryId;
+
+    @ApiModelProperty(value = "分类名称")
+    private String categoryName;
 
     @ApiModelProperty(value = "HTML格式的文章内容")
     private String contentHtml;
@@ -57,7 +64,7 @@ public class Article implements Serializable {
     private String coverImage;
 
     @ApiModelProperty(value = "文章审核状态")
-    private Integer check;
+    private Integer audit;
 
     @ApiModelProperty(value = "文章状态：0-草稿，1-已发布，2-已下架，3-已删除")
     private Integer status;
@@ -84,16 +91,17 @@ public class Article implements Serializable {
     private Long collectCount;
 
     @ApiModelProperty(value = "是否热门：0-否，1-是")
-    private Boolean isHot;
+    private Short isHot;
 
     @ApiModelProperty(value = "是否推荐：0-否，1-是")
-    private Boolean isRecommend;
+    private Short isRecommend;
 
     @ApiModelProperty(value = "是否允许评论：0-否，1-是")
-    private Boolean allowComment;
+    private Short allowComment;
 
     @ApiModelProperty(value = "文章字数")
     private Integer wordCount;
 
-
+    @ApiModelProperty(value = "逻辑删除")
+    private Integer isDelete;
 }

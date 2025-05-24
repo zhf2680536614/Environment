@@ -175,7 +175,13 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.atey.EnvironmentApplication</mainClass>
-
+                    <includes>
+                        <include>
+                            <groupId>nothing</groupId>
+                            <artifactId>nothing</artifactId>
+                        </include>
+                    </includes>
+                    <layout>ZIP</layout>
                 </configuration>
                 <executions>
                     <execution>

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/user")
-@Api(tags = "用户登录相关接口")
+@Api(tags = "用户相关接口/用户登录接口")
 @Slf4j
 @RequiredArgsConstructor
 public class UserLoginController {

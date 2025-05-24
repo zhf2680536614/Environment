@@ -1,6 +1,7 @@
 package com.atey.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -60,7 +61,8 @@ public class User implements Serializable {
     private String email;
 
     @ApiModelProperty(value = "逻辑删除 0为未删除，1为已删除")
-    private Integer deleted;
+    @TableField(value = "is_delete")
+    private Integer isDelete;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;

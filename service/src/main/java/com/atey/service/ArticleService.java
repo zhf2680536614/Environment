@@ -1,7 +1,9 @@
 package com.atey.service;
 
 import com.atey.dto.ArticleDto;
+import com.atey.dto.PageDto;
 import com.atey.entity.Article;
+import com.atey.query.ArticlePageQuery;
 import com.atey.vo.ArticleVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -21,4 +23,11 @@ public interface ArticleService extends IService<Article> {
      * @return
      */
     void addArticle(ArticleDto articleDto);
+
+    /**
+     * 文章分页查询
+     * @param query
+     * @return
+     */
+    PageDto<ArticleVo> pageQuery(ArticlePageQuery query);
 }

@@ -22,10 +22,10 @@ public class ArticleVo implements Serializable {
     private String title;
 
     @ApiModelProperty(value = "作者名称")
-    private Long authorName;
+    private String authorName;
 
     @ApiModelProperty(value = "分类名称")
-    private Long categoryName;
+    private String categoryName;
 
     @ApiModelProperty(value = "HTML格式的文章内容")
     private String contentHtml;
@@ -40,7 +40,7 @@ public class ArticleVo implements Serializable {
     private String coverImage;
 
     @ApiModelProperty(value = "文章审核状态")
-    private Integer check;
+    private Integer audit;
 
     @ApiModelProperty(value = "文章状态：0-草稿，1-已发布，2-已下架，3-已删除")
     private Integer status;
@@ -67,13 +67,13 @@ public class ArticleVo implements Serializable {
     private Long collectCount;
 
     @ApiModelProperty(value = "是否热门：0-否，1-是")
-    private Boolean isHot;
+    private Short isHot;
 
     @ApiModelProperty(value = "是否推荐：0-否，1-是")
-    private Boolean isRecommend;
+    private Short isRecommend;
 
     @ApiModelProperty(value = "是否允许评论：0-否，1-是")
-    private Boolean allowComment;
+    private Short allowComment;
 
     @ApiModelProperty(value = "文章字数")
     private Integer wordCount;
