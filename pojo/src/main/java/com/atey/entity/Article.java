@@ -103,5 +103,5 @@ public class Article implements Serializable {
     private Integer wordCount;
 
     @ApiModelProperty(value = "逻辑删除")
-    private Integer isDelete;
+    private Integer deleted;
 }

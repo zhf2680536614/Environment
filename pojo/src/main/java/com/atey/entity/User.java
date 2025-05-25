@@ -60,15 +60,12 @@ public class User implements Serializable {
     @ApiModelProperty(value = "邮箱")
     private String email;
 
-    @ApiModelProperty(value = "逻辑删除 0为未删除，1为已删除")
-    @TableField(value = "is_delete")
-    private Integer isDelete;
-
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "修改时间")
     private LocalDateTime updateTime;
 
-
+    @ApiModelProperty(value = "逻辑删除 0为未删除，1为已删除")
+    private Integer deleted;
 }

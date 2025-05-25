@@ -83,4 +83,12 @@ public class ArticleController {
         articleService.updateArticle(dto);
         return Result.success();
     }
+
+    @ApiOperation("删除文章")
+    @DeleteMapping("/{id}")
+    public Result<Object> deleteArticle(@PathVariable Long id){
+        log.info("删除文章");
+        articleService.removeById(id);
+        return Result.success();
+    }
 }
