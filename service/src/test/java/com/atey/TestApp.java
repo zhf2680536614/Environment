@@ -23,7 +23,7 @@ public class TestApp {
     @Test
     public void uploadImage() throws IOException {
         FileInputStream inputStream = new FileInputStream("D:\\app.jpg");
-        String url = fileStorageUtil.uploadImage("", "aaapp.jpg", inputStream);
+        String url = fileStorageUtil.uploadImage("", "aaaapp.jpg", inputStream);
         System.out.println(url);
         System.out.println("图片上传测试");
         inputStream.close();

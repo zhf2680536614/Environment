@@ -2,9 +2,11 @@ package com.atey.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import com.atey.context.UserContext;
 import com.atey.dto.ArticleDto;
 import com.atey.dto.PageDto;
 import com.atey.entity.Article;
+import com.atey.entity.User;
 import com.atey.enumeration.ArticleCheckEnum;
 import com.atey.enumeration.ArticleStatusEnum;
 import com.atey.mapper.ArticleMapper;
@@ -13,9 +15,14 @@ import com.atey.service.ArticleService;
 import com.atey.vo.ArticleVo;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -26,9 +33,12 @@ import java.time.LocalDateTime;
  * @since 2025-05-23
  */
 @Service
+@RequiredArgsConstructor
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
     private static final Long ZERO = 0L;
+
+    private final UserContext userContext;
 
     /**
      * 添加文章
@@ -49,12 +59,34 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         article.setIsRecommend(Short.valueOf(String.valueOf(ZERO)));
         article.setIsHot(Short.valueOf(String.valueOf(ZERO)));
         article.setAllowComment(Short.valueOf(String.valueOf(ZERO)));
+
+        Map<Long, String> user = userContext.getUser();
+
+        Set<Map.Entry<Long, String>> entries = user.entrySet();
+
+        Long id = 0L;
+        for (Map.Entry<Long, String> entry : entries) {
+            id = entry.getKey();
+        }
+
+        User one = Db.lambdaQuery(User.class)
+                .eq(User::getId, id)
+                .one();
+
+        article.setAuthorId(one.getId());
+        article.setAuthorName(one.getUsername());
+
         this.save(article);
     }
 
+    /**
+     * 文章分页查询
+     * @param query
+     * @return
+     */
     @Override
     public PageDto<ArticleVo> pageQuery(ArticlePageQuery query) {
-        Page<Article> page = query.toPage();
+        Page<Article> page = query.toMpPageDefaultSortByCreateTimeDesc();
         Page<Article> dto = lambdaQuery()
                 .like(StrUtil.isNotBlank(query.getTitle()), Article::getTitle, query.getTitle())
                 .like(StrUtil.isNotBlank(query.getAuthorName()), Article::getAuthorName, query.getAuthorName())
@@ -66,5 +98,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                         Article::getPublishTime, query.getStartPublishTime(), query.getEndPublishTime()
                 ).page(page);
         return PageDto.of(dto, ArticleVo.class);
+    }
+
+    /**
+     * 更新文章
+     * @param dto
+     */
+    @Override
+    public void updateArticle(ArticleDto dto) {
+        Article article = BeanUtil.copyProperties(dto, Article.class);
+        this.updateById(article);
     }
 }

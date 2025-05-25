@@ -30,4 +30,10 @@ public interface ArticleService extends IService<Article> {
      * @return
      */
     PageDto<ArticleVo> pageQuery(ArticlePageQuery query);
+
+    /**
+     * 更新文章
+     * @param dto
+     */
+    void updateArticle(ArticleDto dto);
 }

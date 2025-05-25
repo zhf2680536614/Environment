@@ -1,6 +1,7 @@
 package com.atey.utils;
 
 import ch.qos.logback.core.util.StringUtil;
+import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import com.atey.properties.MinioProperties;
 import io.minio.MinioClient;
@@ -19,7 +20,6 @@ public class MinioFileStorageUtil {
     private final MinioClient minioClient;
 
     private final MinioProperties minioProperties;
-
     //分隔符
     private final static String separator = "/";
 
@@ -30,7 +30,8 @@ public class MinioFileStorageUtil {
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         String todayDate = sdf.format(new Date());
-        stringBuilder.append(todayDate).append(separator).append(filename);
+        UUID uuid = UUID.randomUUID();
+        stringBuilder.append(todayDate).append(separator).append(uuid).append(filename);
         return stringBuilder.toString();
     }
 
@@ -45,7 +46,7 @@ public class MinioFileStorageUtil {
             minioClient.putObject(putObject);
             return minioProperties.getReadPath() + separator + minioProperties.getBucket() +
                     separator +
-                    filename;
+                    filePath;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

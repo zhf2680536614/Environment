@@ -24,6 +24,9 @@ public class ArticleVo implements Serializable {
     @ApiModelProperty(value = "作者名称")
     private String authorName;
 
+    @ApiModelProperty(value="分类id")
+    private Long categoryId;
+
     @ApiModelProperty(value = "分类名称")
     private String categoryName;
 

@@ -48,4 +48,4 @@ atey:
     secret-key: minio123
     bucket: article
     end-point: http://192.168.111.129:9000
-    read-path: /article
+    read-path: http://192.168.111.129:9000

@@ -40,7 +40,7 @@
         <knife4j>3.0.2</knife4j>
         <hutool.version>5.8.26</hutool.version>
         <spring-doc.version>2.2.0</spring-doc.version>
-        <minio.version>7.1.0</minio.version>
+        <minio.version>8.5.5</minio.version>
     </properties>
 
     <dependencyManagement>

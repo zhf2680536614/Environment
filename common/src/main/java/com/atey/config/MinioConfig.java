@@ -17,11 +17,13 @@ public class MinioConfig {
     @Bean
     public MinioClient buildMinioClient(){
         log.info("minio init");
-        return MinioClient
+        MinioClient minioClient = MinioClient
                 .builder()
                 .credentials(minioProperties.getAccessKey(), minioProperties.getSecretKey())
                 .endpoint(minioProperties.getEndPoint())
                 .build();
+//        minioClient.(true);
+        return minioClient;
     }
 
 }
