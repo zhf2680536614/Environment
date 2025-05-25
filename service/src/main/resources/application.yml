@@ -37,11 +37,11 @@ atey:
   jwt:
     user-secret-key: ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0OPB0USER
     user-token-name: Authentication
-    user-ttl: 7200000
+    user-ttl: 72000000
 
     manage-secret-key: ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0ATEY0OPB0MANAGE
     manage-token-name: Token
-    manage-ttl: 7200000
+    manage-ttl: 72000000
 
   minio:
     access-key: minio

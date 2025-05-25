@@ -8,6 +8,7 @@ import com.atey.dto.PageDto;
 import com.atey.entity.Article;
 import com.atey.entity.User;
 import com.atey.enumeration.ArticleCheckEnum;
+import com.atey.enumeration.ArticleHotEnum;
 import com.atey.enumeration.ArticleStatusEnum;
 import com.atey.mapper.ArticleMapper;
 import com.atey.query.ArticlePageQuery;
@@ -18,9 +19,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -108,5 +109,20 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public void updateArticle(ArticleDto dto) {
         Article article = BeanUtil.copyProperties(dto, Article.class);
         this.updateById(article);
+    }
+
+    /**
+     * 获取热门文章
+     * @return
+     */
+    @Override
+    public List<ArticleVo> getHotArticle() {
+        List<Article> list = lambdaQuery()
+                .eq(Article::getIsHot, ArticleHotEnum.HOT.getKey())
+                .eq(Article::getStatus, ArticleStatusEnum.POST.getKey())
+                .eq(Article::getAudit,ArticleCheckEnum.PASS.getKey())
+                .list();
+
+        return BeanUtil.copyToList(list,ArticleVo.class);
     }
 }

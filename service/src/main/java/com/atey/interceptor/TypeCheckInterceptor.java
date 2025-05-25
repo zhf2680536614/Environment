@@ -29,7 +29,7 @@ public class TypeCheckInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         //判断拦截到的是Controller的方法还是其他资源
-        if(!(handler instanceof HandlerMethod)) {
+        if (!(handler instanceof HandlerMethod)) {
             return true;
         }
 
@@ -46,7 +46,11 @@ public class TypeCheckInterceptor implements HandlerInterceptor {
             loginType = entry.getValue();
         }
 
-        if(!loginType.equals(typename)) {
+        if (loginType.equals(UserTypeEnum.MANAGE.getValue())) {
+            return true;
+        }
+
+        if (!loginType.equals(typename)) {
             throw new BaseException(TypeCheckMessage.TYPE_NOT_EQUALS);
         }
 

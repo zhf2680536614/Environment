@@ -1,10 +1,9 @@
-package com.atey.controller.manage;
+package com.atey.controller.user;
 
 
 import cn.hutool.core.bean.BeanUtil;
 import com.atey.dto.ArticleDto;
 import com.atey.dto.PageDto;
-import com.atey.entity.Article;
 import com.atey.query.ArticlePageQuery;
 import com.atey.result.Result;
 import com.atey.service.ArticleService;
@@ -16,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -25,8 +25,8 @@ import java.util.ArrayList;
  * @author atey
  * @since 2025-05-23
  */
-@RestController("manageArticleController")
-@RequestMapping("/api/manage/article")
+@RestController("userArticleController")
+@RequestMapping("/api/user/article")
 @Slf4j
 @Api(tags = "管理员相关接口/文章相关接口")
 @RequiredArgsConstructor
@@ -35,29 +35,12 @@ public class ArticleController {
     private final ArticleService articleService;
 
     /**
-     * 添加文章
-     *
-     * @param articleDto
-     * @return
+     * 查询热点文章
      */
-    @ApiOperation("添加文章")
-    @PostMapping("/add")
-    public Result<ArticleVo> addArticle(@RequestBody ArticleDto articleDto) {
-        log.info("添加文章");
-        articleService.addArticle(articleDto);
-        return Result.success();
-    }
-
-    /**
-     * 文章分页查询
-     *
-     * @param query
-     * @return
-     */
-    @ApiOperation("文章分页查询")
-    @GetMapping("/list")
-    public Result<PageDto<ArticleVo>> pageQuery(ArticlePageQuery query) {
-        PageDto<ArticleVo> dto = articleService.pageQuery(query);
+    @ApiOperation("查询热点文章")
+    @GetMapping("/hot")
+    public Result<List<ArticleVo>> getHotArticle() {
+        List<ArticleVo> dto = articleService.getHotArticle();
         return Result.success(dto);
     }
 

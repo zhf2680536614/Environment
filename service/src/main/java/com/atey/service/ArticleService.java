@@ -7,6 +7,8 @@ import com.atey.query.ArticlePageQuery;
 import com.atey.vo.ArticleVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 文章表 服务类
@@ -36,4 +38,10 @@ public interface ArticleService extends IService<Article> {
      * @param dto
      */
     void updateArticle(ArticleDto dto);
+
+    /**
+     * 获取热门文章
+     * @return
+     */
+    List<ArticleVo> getHotArticle();
 }
