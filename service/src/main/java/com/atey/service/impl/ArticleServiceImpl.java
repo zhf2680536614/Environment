@@ -2,10 +2,12 @@ package com.atey.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import com.atey.constant.DataDictionaryConstant;
 import com.atey.context.UserContext;
 import com.atey.dto.ArticleDto;
 import com.atey.dto.PageDto;
 import com.atey.entity.Article;
+import com.atey.entity.DataDictionary;
 import com.atey.entity.User;
 import com.atey.enumeration.ArticleCheckEnum;
 import com.atey.enumeration.ArticleHotEnum;
@@ -82,6 +84,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     /**
      * 文章分页查询
+     *
      * @param query
      * @return
      */
@@ -103,16 +106,20 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     /**
      * 更新文章
+     *
      * @param dto
      */
     @Override
     public void updateArticle(ArticleDto dto) {
+
         Article article = BeanUtil.copyProperties(dto, Article.class);
+
         this.updateById(article);
     }
 
     /**
      * 获取热门文章
+     *
      * @return
      */
     @Override
@@ -120,9 +127,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<Article> list = lambdaQuery()
                 .eq(Article::getIsHot, ArticleHotEnum.HOT.getKey())
                 .eq(Article::getStatus, ArticleStatusEnum.POST.getKey())
-                .eq(Article::getAudit,ArticleCheckEnum.PASS.getKey())
+                .eq(Article::getAudit, ArticleCheckEnum.PASS.getKey())
                 .list();
 
-        return BeanUtil.copyToList(list,ArticleVo.class);
+        return BeanUtil.copyToList(list, ArticleVo.class);
     }
 }

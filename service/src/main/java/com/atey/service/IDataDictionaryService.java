@@ -1,8 +1,12 @@
 package com.atey.service;
 
 import com.atey.entity.DataDictionary;
+import com.atey.vo.DataDictionaryVo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -15,4 +19,10 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface IDataDictionaryService extends IService<DataDictionary> {
 
+    /**
+     * 查询文章分类
+     * @param articleCategory
+     * @return
+     */
+    List<DataDictionaryVo> getData(String articleCategory);
 }

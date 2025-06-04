@@ -3,6 +3,8 @@ package com.atey.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -26,6 +28,7 @@ import lombok.experimental.Accessors;
 @ApiModel(value="DataDictionary对象", description="数据字典")
 public class DataDictionary implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "id")
@@ -35,11 +38,8 @@ public class DataDictionary implements Serializable {
     @ApiModelProperty(value = "数据字典类型")
     private String type;
 
-    @ApiModelProperty(value = "key")
-    private String dataKey;
-
-    @ApiModelProperty(value = "value")
-    private String dataValue;
+    @ApiModelProperty(value = "值")
+    private String label;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;

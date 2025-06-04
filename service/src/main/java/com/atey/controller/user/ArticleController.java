@@ -45,6 +45,19 @@ public class ArticleController {
     }
 
     /**
+     * 文章分页查询
+     *
+     * @param query
+     * @return
+     */
+    @ApiOperation("文章分页查询")
+    @GetMapping("/list")
+    public Result<PageDto<ArticleVo>> pageQuery(ArticlePageQuery query) {
+        PageDto<ArticleVo> dto = articleService.pageQuery(query);
+        return Result.success(dto);
+    }
+
+    /**
      * 根据id获取文章
      * @param id
      * @return

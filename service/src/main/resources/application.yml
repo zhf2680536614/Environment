@@ -45,7 +45,7 @@ atey:
 
   minio:
     access-key: minio
-    secret-key: minio123
+    secret-key: zhf160814
     bucket: article
-    end-point: http://192.168.111.129:9000
-    read-path: http://192.168.111.129:9000
+    end-point: http://8.130.134.127:19000
+    read-path: http://8.130.134.127:19000
