@@ -2,7 +2,7 @@ atey:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 160814
-    host: localhost
-    port: 3306
+    password: zhf160814
+    host: 8.130.134.127
+    port: 13306
     database: opb
