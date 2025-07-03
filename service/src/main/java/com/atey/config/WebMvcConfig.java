@@ -27,18 +27,18 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtUserInterceptor)
-                .excludePathPatterns("/api/user/**")
-                .addPathPatterns("/api/manage/**")
-                .excludePathPatterns("/api/manage/login")
-                .excludePathPatterns("/api/user/captcha/validator")
-                        .order(1);
-
-        registry.addInterceptor(typeCheckInterceptor)
-                .addPathPatterns("/api/manage/**")
-                .excludePathPatterns("/api/manage/login")
-                .excludePathPatterns("/api/user/**")
-                .order(2);
+//        registry.addInterceptor(jwtUserInterceptor)
+//                .excludePathPatterns("/api/user/**")
+//                .addPathPatterns("/api/manage/**")
+//                .excludePathPatterns("/api/manage/login")
+//                .excludePathPatterns("/api/user/captcha/validator")
+//                        .order(1);
+//
+//        registry.addInterceptor(typeCheckInterceptor)
+//                .addPathPatterns("/api/manage/**")
+//                .excludePathPatterns("/api/manage/login")
+//                .excludePathPatterns("/api/user/**")
+//                .order(2);
     }
 
     /**
