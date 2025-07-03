@@ -1,4 +1,4 @@
-package com.atey.config;
+package com.atey.config.security;
 
 import com.atey.entity.User;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package com.atey.service.impl;
 
-import com.atey.config.UserDetailsImpl;
+import com.atey.config.security.UserDetailsImpl;
 import com.atey.constant.JwtClaimsConstant;
 import com.atey.dto.UserLoginDto;
 import com.atey.entity.User;
@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -36,38 +37,42 @@ public class UserLoginImpl extends ServiceImpl<UserLoginMapper, User> implements
         String username = dto.getUsername();
         String password = dto.getPassword();
 
-        //生成一个包含账号密码的认证信息
-        Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
-        //AuthenticationManager校验这个信息，并且返回一个已认证的authentication
-        authentication = authenticationManager.authenticate(authentication);
-        //将已认证的信息存入上下文
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            //生成一个包含账号密码的认证信息
+            Authentication authentication = new UsernamePasswordAuthenticationToken(username, password);
+            //AuthenticationManager校验这个信息，并且返回一个已认证的authentication
+            authentication = authenticationManager.authenticate(authentication);
+            //将已认证的信息存入上下文
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetailsImpl userDetails = null;
+            UserDetailsImpl userDetails = null;
 
-        Object principal = authentication.getPrincipal();
-        if(principal instanceof UserDetailsImpl) {
-            userDetails = (UserDetailsImpl) principal;
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetailsImpl) {
+                userDetails = (UserDetailsImpl) principal;
+            }
+            User user;
+            if (userDetails != null) {
+                user = userDetails.getUser();
+            } else {
+                throw new BaseException(LoginMessage.USER_NOT_EXIST);
+            }
+
+            Map<String, Object> claims = new HashMap<>();
+            claims.put(JwtClaimsConstant.USER_ID, user.getId());
+            claims.put(JwtClaimsConstant.TYPE, user.getType());
+
+            String token = JwtUtil.generateJwt(jwtProperties.getUserSecretKey(), jwtProperties.getUserTtl(), claims);
+
+            UserLoginVo userLoginVo = new UserLoginVo();
+
+            userLoginVo.setUserId(user.getId());
+            userLoginVo.setAuthentication(token);
+
+            return userLoginVo;
+        } catch (AuthenticationException ex) {
+            throw new BaseException(LoginMessage.USERNAME_PASSWORD_ERROR);
         }
-        User user;
-        if (userDetails != null) {
-            user = userDetails.getUser();
-        }else{
-            throw new BaseException(LoginMessage.USER_NOT_EXIST);
-        }
-
-        Map<String,Object> claims = new HashMap<>();
-        claims.put(JwtClaimsConstant.USER_ID,user.getId());
-        claims.put(JwtClaimsConstant.TYPE,user.getType());
-
-        String token = JwtUtil.generateJwt(jwtProperties.getUserSecretKey(), jwtProperties.getUserTtl(), claims);
-
-        UserLoginVo userLoginVo = new UserLoginVo();
-
-        userLoginVo.setUserId(user.getId());
-        userLoginVo.setAuthentication(token);
-
-        return userLoginVo;
     }
 
 //    @Override

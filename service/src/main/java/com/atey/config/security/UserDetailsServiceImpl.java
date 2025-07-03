@@ -1,4 +1,4 @@
-package com.atey.config;
+package com.atey.config.security;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.atey.entity.User;

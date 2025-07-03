@@ -1,12 +1,11 @@
 package com.atey.filter;
 
-import com.atey.config.UserDetailsImpl;
+import com.atey.config.security.UserDetailsImpl;
 import com.atey.constant.JwtClaimsConstant;
 import com.atey.context.UserContext;
 import com.atey.entity.User;
 import com.atey.enumeration.UserTypeEnum;
 import com.atey.properties.JwtProperties;
-import com.atey.service.UserLoginService;
 import com.atey.utils.JwtUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import io.jsonwebtoken.Claims;
