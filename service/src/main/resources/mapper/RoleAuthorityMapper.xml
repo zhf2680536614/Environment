@@ -2,4 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.atey.mapper.RoleAuthorityMapper">
 
+    <select id="query" resultType="com.atey.entity.RAConfig">
+        select r.name as role, a.name as authority
+        from role_authority as ra
+                 inner join role as r on r.id = ra.role_id
+                 inner join authority as a on a.id = ra.authority_id
+        where a.auth = ${auth}
+          and a.status = 0
+          and a.deleted = 0
+          and r.status = 0
+          and r.deleted = 0
+          and ra.status = 0
+          and ra.deleted = 0;
+    </select>
 </mapper>

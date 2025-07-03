@@ -3,7 +3,10 @@ package com.atey.filter;
 import com.atey.config.security.UserDetailsImpl;
 import com.atey.constant.JwtClaimsConstant;
 import com.atey.context.UserContext;
+import com.atey.entity.Role;
 import com.atey.entity.User;
+import com.atey.entity.UserRole;
+import com.atey.enumeration.RoleAuthorityEnum;
 import com.atey.enumeration.UserTypeEnum;
 import com.atey.properties.JwtProperties;
 import com.atey.utils.JwtUtil;
@@ -17,13 +20,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -54,8 +62,26 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         UserDetailsImpl loginUser = new UserDetailsImpl();
         loginUser.setUser(user);
 
+        List<UserRole> list = Db.lambdaQuery(UserRole.class)
+                .eq(UserRole::getUserId, userId)
+                .eq(UserRole::getStatus, RoleAuthorityEnum.NORMAL.getKey())
+                .list();
+        List<Long> roleIdList = list.stream().map(UserRole::getRoleId).toList();
+
+        List<String> roleNameList = Db.lambdaQuery(Role.class)
+                .in(Role::getId, roleIdList)
+                .eq(Role::getStatus, RoleAuthorityEnum.NORMAL.getKey())
+                .list()
+                .stream()
+                .map(Role::getName)
+                .toList();
+
+        List<GrantedAuthority> authorities = roleNameList.stream()
+                .map(roleName -> new SimpleGrantedAuthority("ROLE_" + roleName))
+                .collect(Collectors.toList());
+
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginUser, null, null);
+                new UsernamePasswordAuthenticationToken(loginUser, null, authorities);
         //如果是有效的jwt，那么设置该用户为认证后的用户
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         filterChain.doFilter(request, response);

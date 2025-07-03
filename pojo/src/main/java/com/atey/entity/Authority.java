@@ -38,6 +38,9 @@ public class Authority implements Serializable {
     @ApiModelProperty(value = "状态 0-启用 1-禁用")
     private Integer status;
 
+    @ApiModelProperty(value = "认证 0-是 1-否")
+    private Integer auth;
+
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 

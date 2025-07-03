@@ -1,8 +1,12 @@
 package com.atey.mapper;
 
+import com.atey.entity.RAConfig;
+import com.atey.entity.RoleAuthorities;
 import com.atey.entity.RoleAuthority;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +19,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface RoleAuthorityMapper extends BaseMapper<RoleAuthority> {
 
+    List<RAConfig> query(String auth);
 }
