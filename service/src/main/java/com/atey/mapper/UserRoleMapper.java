@@ -2,6 +2,7 @@ package com.atey.mapper;
 
 import com.atey.entity.UserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author atey
  * @since 2025-07-03
  */
+@Mapper
 public interface UserRoleMapper extends BaseMapper<UserRole> {
 
 }
